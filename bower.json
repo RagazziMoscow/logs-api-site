@@ -1,0 +1,11 @@
+{
+  "name": "users-log",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "zz"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true
+}

@@ -1,0 +1,27 @@
+<div id="root">
+
+  <% data.forEach(function(user) { %>
+
+    <p>ID: <span><%= user.id %></span></p>
+    <p>Первое посещение: <span></span></p>
+
+    <div class="visits">
+      <h3>Даты: </h3>
+      <ul>
+      <% user.dates.forEach(function(visit) { %>
+        <li><%= visit.date %> - <%= visit.duration %></li>
+      <% }); %>
+      </ul>
+    </div>
+    <div class="watches">
+      <h3>Просмотры: </h3>
+      </ul>
+      <% user.watches.forEach(function(watch) { %>
+        <li><%= watch %></li>
+      <% }); %>
+      </ul>
+    </div> 
+
+  <% }); %>
+
+</div>
