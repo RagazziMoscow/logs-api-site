@@ -14,11 +14,10 @@ var async = require('async')
 const activeUsersCount = 20;
 
 
-
 app.engine('ejs', engine);
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs'); // so you can render('index')
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res, next) {
 
