@@ -1,8 +1,10 @@
 var express = require('express');
 var app = express();
 var engine = require('ejs-locals');
+var fs = require('fs');
 
 const port = process.env.PORT || 8000;
+const logsFolder = 'logs';
 const path = require('path');
 const chalk = require('chalk');
 
@@ -29,10 +31,19 @@ app.get('/', async function(req, res, next) {
   const usersVisits = logsData[0]; // визиты
   const usersHits = logsData[1]; // просмотры
 
+  fs.writeFile(path.join(logsFolder, 'visits.txt'), JSON.stringify(usersVisits), () => {
+    console.log('visits are writen...');
+  });
+
+  fs.writeFile(path.join(logsFolder, 'hits.txt'), JSON.stringify(usersHits), () => {
+    console.log('hits are writen...');
+  });
+
   const usersIDs = transforms.getUsersIDsList(usersVisits); // ID всех пользователей
   const activeUsersIDs = transforms.getActiveUsers(usersIDs, activeUsersCount); // ID активных пользователей
   const report = await transforms.getActiveUsersStatisticks(activeUsersIDs, usersVisits, usersHits); // отчёт
   //console.log(report);
+
   res.render('report', {
     data: report
   });
