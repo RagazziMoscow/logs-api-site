@@ -25,15 +25,21 @@ module.exports = {
     return IDsList;
   },
   getActiveUsers: function(usersIDsList, activeCount) {
-    const groupedIDsList = core.groupUsersByVisitCount(usersIDsList); // сгруппированный массив
-    const sortedIDsList = core.sortUsersByVisitCount(groupedIDsList); // отсортированный в обр-м порядке
-    const activeIDsCounts = sortedIDsList.slice(0, activeCount); // первые 20 пользователей
+    // const groupedIDsList = core.groupUsersByVisitCount(usersIDsList); // сгруппированный массив
+    // const sortedIDsList = core.sortUsersByVisitCount(groupedIDsList); // отсортированный в обр-м порядке
+    // const activeIDsCounts = sortedIDsList.slice(0, activeCount); // первые 20 пользователей
+    // Заглушка
+    const begin = Math.floor(Math.random() * (usersIDsList.length - activeCount));
+    const end = begin + activeCount;
+    const activeIDsCounts = usersIDsList.slice(begin, end);
+    console.log(activeIDsCounts);
+    /*
     const activeIDs = activeIDsCounts.map((IDItem) => {
       const IDKey = Object.keys(IDItem)[0];
       return IDKey;
     }); // только ID первых activeCount активных юзеров
-
-    return activeIDs;
+    */
+    return activeIDsCounts;
   },
   getActiveUsersStatisticks: function(activeUsersIDsList, usersVisits, usersHits) {
 
