@@ -16,7 +16,7 @@ function getVisits(requestID) {
     };
 
     request(options, function(error, response, body) {
-      if (!body || error) {
+      if (body === undefined || error) {
         reject('Error visits');
       } else {
         console.log('Визиты получены...');
@@ -45,7 +45,6 @@ function getVisits(requestID) {
   });
 }
 
-
 function getHits(requestID) {
   return new Promise((resolve, reject) => {
 
@@ -55,7 +54,8 @@ function getHits(requestID) {
     };
 
     request(options, function(error, response, body) {
-      if (!body || error) {
+      console.log(response.statusCode);
+      if (body == undefined || error) {
         reject('Error hits');
       } else {
         console.log('Просмотры получены...');

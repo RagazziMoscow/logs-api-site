@@ -32,7 +32,7 @@ module.exports = {
     const begin = Math.floor(Math.random() * (usersIDsList.length - activeCount));
     const end = begin + activeCount;
     const activeIDsCounts = usersIDsList.slice(begin, end);
-    console.log(activeIDsCounts);
+    //console.log(activeIDsCounts);
     /*
     const activeIDs = activeIDsCounts.map((IDItem) => {
       const IDKey = Object.keys(IDItem)[0];
