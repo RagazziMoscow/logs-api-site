@@ -55,7 +55,7 @@ function getHits(requestID) {
 
     request(options, function(error, response, body) {
       console.log(response.statusCode);
-      if (body == undefined || error) {
+      if (body === undefined || error) {
         reject('Error hits');
       } else {
         console.log('Просмотры получены...');

@@ -4,31 +4,36 @@
   <% data.forEach(function(user) { %>
     <div class="user row list-group-item">
 
-      <div class="user-info col-md-3">
-        <h4 class="user__id">ID:</h4>
+      <div class="user-info col-md-2">
+        <h3 class="user__id">ID:</h3>
         <p><%= user.id %></p>
       </div>
      
-      <div class="visits col-md-3">
+      <div class="visits col-md-4">
         <h3 class="visits__title">Даты: </h3>
         <ul class="dates list-group">
         <% user.dates.forEach(function(visit) { %>
-          <li class="dates__item list-group-item  list-group-item-action"><%= visit.date %> - <%= visit.duration %></li>
+          <li class="dates__item list-group-item  list-group-item-action">
+            <span><%= visit.date %></span> - <span><%= (visit.duration / 60).toFixed(1) %> мин</span>
+          </li>
         <% }); %>
         </ul>
       </div>
-      <% if (user.watches) { %>
-      <div class="watches col-md-6">
-        <h3 class="watches__title">Просмотры: </h3>
-        <ul class="hits list-group">
-        <% user.watches.forEach(function(watch) { %>
-          <li class="hits__item list-group-item"><a class="list-group-item-action" href="#"><%= watch %></a></li>
-        <% }); %>
-        </ul>
-      </div> 
-      <% } %>
 
-  </div>
+      <% if (user.watches.length != 0) { -%>
+        <div class="watches col-md-6">
+          <h3 class="watches__title">Просмотры: </h3>
+          <ul class="hits list-group">
+          <% user.watches.forEach(function(watch) { %>
+            <li class="hits__item list-group-item">
+              <a class="list-group-item-action" href="#"><%= watch %></a>
+            </li>
+          <% }); %>
+          </ul>
+        </div> 
+      <% } -%>
+
+    </div>
   <% }); %>
 
 </div>
