@@ -1,39 +1,34 @@
 <% layout('index') -%>
-<div id="root container list-group">
 
-  <% data.forEach(function(user) { %>
-    <div class="user row list-group-item">
+<%- partial('actions') %>
+
+<div class="list-group">
+
+    <div class="user row list-group-item" v-for="user in logs">
 
       <div class="user-info col-md-2">
         <h3 class="user__id">ID:</h3>
-        <p><%= user.id %></p>
+        <p>{{ user.id }}</p>
       </div>
      
       <div class="visits col-md-4">
         <h3 class="visits__title">Даты: </h3>
         <ul class="dates list-group">
-        <% user.dates.forEach(function(visit) { %>
-          <li class="dates__item list-group-item  list-group-item-action">
-            <span><%= visit.date %></span> - <span><%= (visit.duration / 60).toFixed(1) %> мин</span>
+          <li class="dates__item list-group-item  list-group-item-action" v-for="visit in user.dates">
+            <span>{{ visit.date }}</span> - <span>{{ (visit.duration / 60).toFixed(1) }} мин</span>
           </li>
-        <% }); %>
         </ul>
       </div>
 
-      <% if (user.watches.length != 0) { -%>
-        <div class="watches col-md-6">
+        <div class="watches col-md-6" v-if="user.watches.length != 0">
           <h3 class="watches__title">Просмотры: </h3>
           <ul class="hits list-group">
-          <% user.watches.forEach(function(watch) { %>
-            <li class="hits__item list-group-item">
-              <a class="list-group-item-action" href="#"><%= watch %></a>
+            <li class="hits__item list-group-item" v-for="watch in user.watches">
+              <a class="list-group-item-action" href="#">{{ watch }}</a>
             </li>
-          <% }); %>
           </ul>
         </div> 
-      <% } -%>
 
     </div>
-  <% }); %>
 
 </div>
