@@ -14,7 +14,7 @@ var files = require('./libs/files');
 
 const activeUsersCount = 20;
 const visitsReqID = 299598;
-const hitsReqID = 299595;
+const hitsReqID = 299658;
 
 
 

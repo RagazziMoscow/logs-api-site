@@ -16,11 +16,9 @@ function getVisits(requestID) {
     };
 
     request(options, function(error, response, body) {
-      if (body === undefined || error) {
-        reject('Error visits');
-      } else {
-        console.log('Визиты получены...');
-      }
+      if (body === undefined || error) reject('Error visits');
+
+      console.log('Визиты получены...');
 
       const lines = body.split('\n').splice(1);
       const visitsList = lines.map((line, index) => {
@@ -54,13 +52,10 @@ function getHits(requestID) {
     };
 
     request(options, function(error, response, body) {
-      console.log(response.statusCode);
-      if (body === undefined || error) {
-        reject('Error hits');
-      } else {
-        console.log('Просмотры получены...');
-      }
+      //console.log(response.statusCode);
+      if (body === undefined || error) reject('Error hits');
 
+      console.log('Просмотры получены...');
 
       const lines = body.split('\n').splice(1);
       let hitsList = lines.map((line, index) => {
@@ -68,7 +63,8 @@ function getHits(requestID) {
         hit = {
           hitID: line[0],
           clientID: line[2],
-          title: line[1]
+          title: line[1],
+          url: line[3]
         };
         return hit;
       });
@@ -92,6 +88,7 @@ function getRequestsList() {
       if (body === undefined || error) reject('Error requests');
 
       console.log('Запросы получены');
+
       const reqList = JSON.parse(body).requests.map((request) => {
         const newItem = {
           id: request.request_id,

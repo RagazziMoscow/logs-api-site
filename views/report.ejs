@@ -28,7 +28,7 @@
         <h3 class="visits__title">Даты: </h3>
         <ul class="dates list-group">
           <li class="dates__item list-group-item  list-group-item-action" v-for="visit in user.dates">
-            <span>{{ visit.date }}</span> - <span>{{ (visit.duration / 60).toFixed(1) }} мин</span>
+            <span>{{ visit.date }}</span> - <strong>{{ (visit.duration / 60).toFixed(1) }} мин</strong>
           </li>
         </ul>
       </div>
@@ -37,7 +37,7 @@
           <h3 class="watches__title">Просмотры: </h3>
           <ul class="hits list-group">
             <li class="hits__item list-group-item" v-for="watch in user.watches">
-              <a class="list-group-item-action" href="#">{{ watch }}</a>
+              <a class="list-group-item-action" v-bind:href="watch.url">{{ watch.title }}</a>
             </li>
           </ul>
         </div> 

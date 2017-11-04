@@ -17,7 +17,10 @@ function getWatchesForUser(activeHits, ID) {
       return (hit.clientID == ID);
     })
     .map((watch) => {
-      return watch.title
+      return {
+        title: watch.title,
+        url: watch.url
+      };
     });
 
   const clearedWatches = userWatches.filter((hit, index, userWatches) => {
