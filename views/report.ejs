@@ -3,7 +3,9 @@
   <div class="row actions-list">
     <div class="col-md-5"></div>
     <div class="col-md-3">
-      <h4 class="offset">Вывести {{ offset + activeCount }} пользователей</h4>
+      <h4 class="offset">
+        {{ (logsAreReady) ? ('Вывести ' + Number(offset + activeCount) + ' пользователей') : 'Загрузите логи'}}
+      </h4>
     </div>
     <div class="col-md-2">
       <button type="button" class="btn btn-warning" v-on:click="downloadLogs">Загрузить логи</button>

@@ -31,14 +31,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', async function(req, res, next) {
-  res.render('report');
+  res.render('report', {
+    title: 'Логи'
+  });
 });
 
 
 app.get('/checkLogs', async function(req, res) {
   const logsExist = await files.logsExist(logsFolder);
   //console.log(logsExist);
-  res.json({logsExist});
+  res.json({
+    logsExist
+  });
 });
 
 app.get('/download', async function(req, res, next) {
