@@ -114,7 +114,7 @@ function getRequestsIDs() {
     };
 
     request(options, function(error, response, body) {
-      if (body === undefined || error) reject(err);
+      if (body === undefined || error) reject(error);
 
       console.log('Запросы получены...');
 

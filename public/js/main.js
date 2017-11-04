@@ -23,6 +23,7 @@ var app = new Vue({
         offset: this.offset,
         activeCount: this.activeCount
       };
+      
       this.$http.post('/print', data, {
         emulateJSON: true
       }).then(response => {
