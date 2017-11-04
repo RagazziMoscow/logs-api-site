@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var engine = require('ejs-locals');
+var bodyParser = require('body-parser');
 
 const port = process.env.PORT || 8000;
 const logsFolder = 'logs';
@@ -20,7 +21,15 @@ const hitsReqID = 295878;
 app.engine('ejs', engine);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs'); // so you can render('index')
+
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 
 app.get('/', async function(req, res, next) {
   res.render('report');
@@ -34,11 +43,13 @@ app.get('/download', async function(req, res, next) {
 
   files.writeLogs(logsFolder, usersVisits, usersHits); // Запись логов
   console.log(chalk.red('Логи загружены...'));
-  
+
   res.status(200).send('OK');
 });
 
-app.get('/print', async function(req, res, next) {
+app.post('/print', async function(req, res, next) {
+  let offsetCount = 0
+  if (req.body) offsetCount = Number(req.body.offset);
 
   const logsData = await files.readLogs(logsFolder); // чтение логов
   console.log(chalk.red('Обработка логов начата...'));
@@ -47,7 +58,7 @@ app.get('/print', async function(req, res, next) {
   const usersHits = logsData[1]; // просмотры
 
   const usersIDs = transforms.getUsersIDsList(usersVisits); // ID всех пользователей
-  const activeUsersIDs = transforms.getActiveUsers(usersIDs, activeUsersCount); // ID активных пользователей
+  const activeUsersIDs = transforms.getActiveUsers(usersIDs, activeUsersCount, offsetCount); // ID активных пользователей
   const report = await transforms.getActiveUsersStatisticks(activeUsersIDs, usersVisits, usersHits); // отчёт
   console.log(chalk.red('Логи получены...'));
 

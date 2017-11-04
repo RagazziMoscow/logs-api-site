@@ -24,14 +24,16 @@ module.exports = {
     });
     return IDsList;
   },
-  getActiveUsers: function(usersIDsList, activeCount) {
+  getActiveUsers: function(usersIDsList, activeCount, offsetCount) {
     // const groupedIDsList = core.groupUsersByVisitCount(usersIDsList); // сгруппированный массив
     // const sortedIDsList = core.sortUsersByVisitCount(groupedIDsList); // отсортированный в обр-м порядке
     // const activeIDsCounts = sortedIDsList.slice(0, activeCount); // первые 20 пользователей
     // Заглушка
+    /*
     const begin = Math.floor(Math.random() * (usersIDsList.length - activeCount));
     const end = begin + activeCount;
     const activeIDsCounts = usersIDsList.slice(begin, end);
+    */
     //console.log(activeIDsCounts);
     /*
     const activeIDs = activeIDsCounts.map((IDItem) => {
@@ -39,6 +41,13 @@ module.exports = {
       return IDKey;
     }); // только ID первых activeCount активных юзеров
     */
+
+    const begin = offsetCount || 0;
+    let end = begin + activeCount;
+    if (end > usersIDsList.length) end = usersIDsList.length - 1;
+    console.log(begin, end);
+
+    const activeIDsCounts = usersIDsList.slice(begin, end);
     return activeIDsCounts;
   },
   getActiveUsersStatisticks: function(activeUsersIDsList, usersVisits, usersHits) {

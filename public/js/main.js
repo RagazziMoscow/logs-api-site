@@ -1,25 +1,30 @@
 var app = new Vue({
   el: '#app',
   data: {
-    counter: 1,
+    offset: 0,
+    activeCount: 20,
     logs: []
   },
   methods: {
     downloadLogs: function() {
+
       this.$http.get('/download').then(response => {
-
-        // get body data
-        //this.logs = response.body;
-        console.log('1312');
-
-      }, response => {
+        console.log('Логи загружены');
+      }, err => {
         // error callback
-        console.log(response);
+        console.log(err);
       });
     },
     printLogs: function() {
-      this.$http.get('/print').then(response => {
-        this.logs = response.body;
+
+      const data = {
+        offset: this.offset
+      };
+      this.$http.post('/print', data, {
+        emulateJSON: true
+      }).then(response => {
+        this.logs = this.logs.concat(response.body);
+        this.offset += 20;
       }, (err) => {
         console.log(err);
       });
