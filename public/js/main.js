@@ -20,7 +20,8 @@ var app = new Vue({
     printLogs: function() {
 
       const data = {
-        offset: this.offset
+        offset: this.offset,
+        activeCount: this.activeCount
       };
       this.$http.post('/print', data, {
         emulateJSON: true

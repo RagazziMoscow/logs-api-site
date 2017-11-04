@@ -12,11 +12,6 @@ var requests = require('./libs/requests');
 var transforms = require('./libs/transforms');
 var files = require('./libs/files');
 
-const activeUsersCount = 20;
-const visitsReqID = 299598;
-const hitsReqID = 299658;
-
-
 
 app.engine('ejs', engine);
 app.set('views', __dirname + '/views');
@@ -73,7 +68,11 @@ app.get('/download', async function(req, res, next) {
 
 app.post('/print', async function(req, res, next) {
   let offsetCount = 0;
-  if (req.body) offsetCount = Number(req.body.offset);
+  let activeUsersCount = 20;
+  if (req.body) {
+    offsetCount = Number(req.body.offset)
+    activeUsersCount = Number(req.body.activeCount);
+  };
 
   const logsData = await files.readLogs(logsFolder); // чтение логов
   console.log(chalk.red('Обработка логов начата...'));
