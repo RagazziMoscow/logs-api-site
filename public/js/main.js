@@ -3,12 +3,14 @@ var app = new Vue({
   data: {
     offset: 0,
     activeCount: 20,
+    logsAreReady: false,
     logs: []
   },
   methods: {
     downloadLogs: function() {
 
       this.$http.get('/download').then(response => {
+        this.logsAreReady = true;
         console.log('Логи загружены');
       }, err => {
         // error callback
@@ -29,5 +31,12 @@ var app = new Vue({
         console.log(err);
       });
     }
+  },
+  created: function() {
+    this.$http.get('/checkLogs').then(response => {
+      this.logsAreReady = response.body.logsExist;
+    }, (err) => {
+      console.log(err);
+    });
   }
 });

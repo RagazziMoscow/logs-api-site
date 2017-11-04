@@ -3,13 +3,13 @@
   <div class="row actions-list">
     <div class="col-md-5"></div>
     <div class="col-md-3">
-      <h4 class="offset">Вывести {{ offset + activeCount }} ппользователей</h4>
+      <h4 class="offset">Вывести {{ offset + activeCount }} пользователей</h4>
     </div>
     <div class="col-md-2">
       <button type="button" class="btn btn-warning" v-on:click="downloadLogs">Загрузить логи</button>
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-success" v-on:click="printLogs">Вывести логи</button>
+      <button type="button" class="btn btn-success" v-on:click="printLogs" v-bind:disabled="!logsAreReady">Вывести логи</button>
     </div>
   </div>
 

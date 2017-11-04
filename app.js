@@ -13,8 +13,8 @@ var transforms = require('./libs/transforms');
 var files = require('./libs/files');
 
 const activeUsersCount = 20;
-const visitsReqID = 295866;
-const hitsReqID = 295878;
+const visitsReqID = 299598;
+const hitsReqID = 299595;
 
 
 
@@ -30,11 +30,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
 app.get('/', async function(req, res, next) {
   res.render('report');
 });
 
+
+app.get('/checkLogs', async function(req, res) {
+  const logsExist = await files.logsExist(logsFolder);
+  //console.log(logsExist);
+  res.json({logsExist});
+});
 
 app.get('/download', async function(req, res, next) {
   const logsData = await requests.getData(visitsReqID, hitsReqID); // Загрузка логов
@@ -48,7 +53,7 @@ app.get('/download', async function(req, res, next) {
 });
 
 app.post('/print', async function(req, res, next) {
-  let offsetCount = 0
+  let offsetCount = 0;
   if (req.body) offsetCount = Number(req.body.offset);
 
   const logsData = await files.readLogs(logsFolder); // чтение логов

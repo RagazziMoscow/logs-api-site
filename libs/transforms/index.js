@@ -45,7 +45,7 @@ module.exports = {
     const begin = offsetCount || 0;
     let end = begin + activeCount;
     if (end > usersIDsList.length) end = usersIDsList.length - 1;
-    console.log(begin, end);
+    //console.log(begin, end);
 
     const activeIDsCounts = usersIDsList.slice(begin, end);
     return activeIDsCounts;

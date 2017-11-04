@@ -32,20 +32,39 @@ module.exports = {
         (callback) => {
           fs.writeFile(path.join(logsFolder, 'visits.txt'), JSON.stringify(usersVisits), (err) => {
             if (err) reject(err);
-            console.log('visits are writen...');
+            console.log('Визиты записаны...');
           });
           callback(null);
         },
         (callback) => {
           fs.writeFile(path.join(logsFolder, 'hits.txt'), JSON.stringify(usersHits), (err) => {
             if (err) reject(err);
-            console.log('hits are writen...');
+            console.log('Просмотры записаны...');
           });
           callback(null);
         }
       ], (err, res) => {
         if (err) reject(err);
         resolve();
+      });
+    });
+  },
+  logsExist: function(logsFolder) {
+    return new Promise((resolve, reject) => {
+      async.parallel([
+        (callback) => {
+          fs.exists(path.join(logsFolder, 'visits.txt'), (exists) => {
+            callback(null, exists);
+          });
+        },
+        (callback) => {
+          fs.exists(path.join(logsFolder, 'hits.txt'), (exists) => {
+            callback(null, exists);
+          });
+        }
+      ], (err, results) => {
+        if (err) reject(err);
+        resolve(results[0] && results[1]);
       });
     });
   }
