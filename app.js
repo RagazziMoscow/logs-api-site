@@ -37,6 +37,17 @@ app.get('/', async function(req, res, next) {
 });
 
 
+app.get('/requests', async function(req, res) {
+  const reqList = await requests.getRequestsList();
+  //console.log(reqList);
+  res.render('requests', {
+    title: 'Запросы',
+    requests: reqList
+  });
+});
+
+
+
 app.get('/checkLogs', async function(req, res) {
   const logsExist = await files.logsExist(logsFolder);
   //console.log(logsExist);

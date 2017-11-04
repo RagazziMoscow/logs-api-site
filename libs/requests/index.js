@@ -24,5 +24,14 @@ module.exports = {
         resolve(results);
       });
     });
+  },
+
+  getRequestsList: function() {
+    return new Promise((resolve, reject) => {
+      const reqList = core.getRequestsList()
+        .then((list) => {
+          resolve(list);
+        });
+    });
   }
 }

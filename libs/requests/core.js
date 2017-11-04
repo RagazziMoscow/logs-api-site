@@ -80,6 +80,35 @@ function getHits(requestID) {
   });
 }
 
+function getRequestsList() {
+  return new Promise((resolve, reject) => {
 
+    const options = {
+      url: `https://api-metrika.yandex.ru/management/v1/counter/${CounterID}/logrequests/`,
+      headers: AuthHeader
+    };
+
+    request(options, function(error, response, body) {
+      if (body === undefined || error) reject('Error requests');
+
+      console.log('Запросы получены');
+      const reqList = JSON.parse(body).requests.map((request) => {
+        const newItem = {
+          id: request.request_id,
+          source: request.source,
+          date1: request.date1,
+          date2: request.date2
+        };
+        return newItem;
+      });
+      resolve(reqList);
+
+
+    });
+  });
+}
+
+
+module.exports.getRequestsList = getRequestsList;
 module.exports.getVisits = getVisits;
 module.exports.getHits = getHits;

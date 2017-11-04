@@ -1,0 +1,15 @@
+<% layout('index') -%>
+
+
+<div class="requests container">
+  <div class="list-group">
+    <% requests.forEach(function(request) { %>
+      <div class="list-group-item request row"> 
+        <p class="col-md-3">ID: <strong><%= request.id %></strong></p>
+        <p class="col-md-3">Источник: <strong><%= (request.source == 'hits') ? 'Просмотры' : 'Визиты' %></strong></p>
+        <p class="col-md-3">От: <strong><%= request.date1 %></strong></p>
+        <p class="col-md-3">До: <strong><%= request.date2 %></strong></p>
+      </div>
+    <% }); %>
+  </div>
+</div>
