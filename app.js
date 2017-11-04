@@ -57,6 +57,10 @@ app.get('/checkLogs', async function(req, res) {
 });
 
 app.get('/download', async function(req, res, next) {
+  const IDs = await requests.getRequestsIDs();
+  const visitsReqID = IDs[0];
+  const hitsReqID = IDs[1];
+
   const logsData = await requests.getData(visitsReqID, hitsReqID); // Загрузка логов
   const usersVisits = logsData[0]; // Визиты
   const usersHits = logsData[1]; // Просмотры
@@ -83,6 +87,11 @@ app.post('/print', async function(req, res, next) {
   console.log(chalk.red('Логи получены...'));
 
   res.json(report);
+});
+
+app.get('/removeLogs', async function(req, res) {
+  const results = await files.removeLogs(logsFolder);
+  res.status(200).send('OK');
 });
 
 

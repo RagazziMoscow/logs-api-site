@@ -30,6 +30,17 @@ var app = new Vue({
       }, (err) => {
         console.log(err);
       });
+    },
+    removeLogs: function() {
+      this.$http.get('/removeLogs').then((response) => {
+        this.logsAreReady = false;
+      }, (err) => {
+        console.log(err);
+      });
+    },
+    clearPrintedLogs: function() {
+      this.logs = [];
+      this.offset = 0;
     }
   },
   created: function() {

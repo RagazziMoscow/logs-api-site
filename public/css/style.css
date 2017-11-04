@@ -5,3 +5,13 @@ body {
 .actions-list {
     margin-bottom: 100px;
 }
+
+.user-info__id {
+    margin-top: 20px;
+}
+
+.message__content {
+    font-size: 25px;
+
+    text-align: center;
+}

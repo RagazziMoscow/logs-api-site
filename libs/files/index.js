@@ -67,5 +67,26 @@ module.exports = {
         resolve(results[0] && results[1]);
       });
     });
+  },
+  removeLogs: function(logsFolder) {
+    return new Promise((resolve, reject) => {
+      async.parallel([
+        (callback) => {
+          fs.unlink(path.join(logsFolder, 'visits.txt'), (err) => {
+            if (err) reject(err);
+            callback(null);
+          });
+        },
+        (callback) => {
+          fs.unlink(path.join(logsFolder, 'hits.txt'), (err) => {
+            if (err) reject(err);
+            callback(null);
+          });
+        }
+      ], (err, results) => {
+        if (err) reject(err);
+        resolve();
+      });
+    });
   }
 }

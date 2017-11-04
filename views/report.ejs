@@ -1,27 +1,48 @@
 <% layout('index') -%>
 
   <div class="row actions-list">
-    <div class="col-md-5"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-3">
       <h4 class="offset">
         {{ (logsAreReady) ? ('Вывести ' + Number(offset + activeCount) + ' пользователей') : 'Загрузите логи'}}
       </h4>
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-warning" v-on:click="downloadLogs">Загрузить логи</button>
+      <button type="button" class="btn btn-warning" v-on:click="downloadLogs" v-bind:disabled="logsAreReady">
+        Загрузить логи
+      </button>
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-success" v-on:click="printLogs" v-bind:disabled="!logsAreReady">Вывести логи</button>
+      <button type="button" class="btn btn-warning" v-on:click="removeLogs" v-bind:disabled="!logsAreReady">
+        Удалить логи
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-success" v-on:click="printLogs" v-bind:disabled="!logsAreReady">
+        Вывести логи
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-success" v-on:click="clearPrintedLogs" v-bind:disabled="logs.length == 0">
+        Очистить вывод
+      </button>
     </div>
   </div>
 
-<div class="list-group">
 
+    <div class="message row" v-if="logs.length == 0">
+      <div class="message__content col-md-12">
+        <strong>Здесь могут быть ваши логи</strong>
+      </div>
+    </div>
+
+
+<div class="list-group logs">
     <div class="user row list-group-item" v-for="user in logs">
 
       <div class="user-info col-md-2">
-        <h3 class="user__id">ID:</h3>
-        <p>{{ user.id }}</p>
+        <h3 class="user-info__title">ID:</h3>
+        <p class="user-info__id">{{ user.id }}</p>
       </div>
      
       <div class="visits col-md-4">
@@ -37,7 +58,7 @@
           <h3 class="watches__title">Просмотры: </h3>
           <ul class="hits list-group">
             <li class="hits__item list-group-item" v-for="watch in user.watches">
-              <a class="list-group-item-action" v-bind:href="watch.url">{{ watch.title }}</a>
+              <a class="list-group-item-action" target="_blank" v-bind:href="watch.url">{{ watch.title }}</a>
             </li>
           </ul>
         </div> 

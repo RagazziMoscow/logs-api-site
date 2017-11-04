@@ -33,5 +33,13 @@ module.exports = {
           resolve(list);
         });
     });
+  },
+  getRequestsIDs: function() {
+    return new Promise((resolve, reject) => {
+      const IdsList = core.getRequestsIDs()
+        .then((list) => {
+          resolve(list);
+        });
+    });
   }
 }

@@ -105,7 +105,34 @@ function getRequestsList() {
   });
 }
 
+function getRequestsIDs() {
+  return new Promise((resolve, reject) => {
+
+    const options = {
+      url: `https://api-metrika.yandex.ru/management/v1/counter/${CounterID}/logrequests/`,
+      headers: AuthHeader
+    };
+
+    request(options, function(error, response, body) {
+      if (body === undefined || error) reject(err);
+
+      console.log('Запросы получены...');
+
+      const requests = JSON.parse(body).requests;
+      const visitsRequests = requests.filter((request) => {
+        return (request.source == 'visits');
+      });
+      const hitsRequests = requests.filter((request) => {
+        return (request.source == 'hits');
+      });
+      //console.log(visitsRequests, hitsRequests);
+
+      resolve([visitsRequests.slice(-1)[0].request_id, hitsRequests.slice(-1)[0].request_id]);
+    });
+  });
+}
 
 module.exports.getRequestsList = getRequestsList;
+module.exports.getRequestsIDs = getRequestsIDs;
 module.exports.getVisits = getVisits;
 module.exports.getHits = getHits;
