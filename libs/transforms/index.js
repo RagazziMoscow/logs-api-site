@@ -77,7 +77,12 @@ module.exports = {
           const userData = {
             id: ID,
             dates: usersDates,
-            watches: userWatches
+            watches: userWatches.filter((watch, index, datesArr) => {
+              const finedIndex = datesArr.findIndex((item, index, arr) => {
+                return (item.url == watch.url && item.title == watch.title);
+              });
+              return (index === finedIndex);
+            })
           };
 
           return userData;
