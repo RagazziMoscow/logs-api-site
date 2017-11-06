@@ -15,6 +15,7 @@ var app = new Vue({
       }, err => {
         // error callback
         console.log(err);
+        alert('Ошибка сервера');
       });
     },
     printLogs: function() {
@@ -23,7 +24,7 @@ var app = new Vue({
         offset: this.offset,
         activeCount: this.activeCount
       };
-      
+
       this.$http.post('/print', data, {
         emulateJSON: true
       }).then(response => {
@@ -31,6 +32,7 @@ var app = new Vue({
         this.offset += 20;
       }, (err) => {
         console.log(err);
+        alert('Ошибка сервера');
       });
     },
     removeLogs: function() {
@@ -38,6 +40,7 @@ var app = new Vue({
         this.logsAreReady = false;
       }, (err) => {
         console.log(err);
+        alert('Ошибка сервера');
       });
     },
     clearPrintedLogs: function() {
@@ -50,6 +53,7 @@ var app = new Vue({
       this.logsAreReady = response.body.logsExist;
     }, (err) => {
       console.log(err);
+      alert('Ошибка сервера');
     });
   }
 });

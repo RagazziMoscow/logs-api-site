@@ -26,20 +26,12 @@ module.exports = {
     });
   },
 
-  getRequestsList: function() {
-    return new Promise((resolve, reject) => {
-      const reqList = core.getRequestsList()
-        .then((list) => {
-          resolve(list);
-        });
-    });
+  getRequestsList: async function() {
+    const reqList = await core.getRequestsList();
+    return reqList;
   },
-  getRequestsIDs: function() {
-    return new Promise((resolve, reject) => {
-      const IdsList = core.getRequestsIDs()
-        .then((list) => {
-          resolve(list);
-        });
-    });
+  getRequestsIDs: async function() {
+    const IDsList = await core.getRequestsIDs();
+    return IDsList;
   }
 }
