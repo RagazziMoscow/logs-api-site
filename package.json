@@ -9,13 +9,14 @@
   "scripts": {
     "test": "test",
     "start": "node app.js",
-    "postinstall": "bower install"
+    "postinstall": "bash ./post_install.sh"
   },
   "author": "zz",
   "license": "ISC",
   "dependencies": {
     "async": "^2.5.0",
     "body-parser": "^1.18.2",
+    "bower": "^1.8.2",
     "chalk": "^2.3.0",
     "ejs-locals": "^1.0.2",
     "express": "^4.16.2",
