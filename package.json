@@ -2,7 +2,7 @@
   "name": "users-log",
   "engines": {
     "node": ">=7.10.1"
-  }
+  },
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
