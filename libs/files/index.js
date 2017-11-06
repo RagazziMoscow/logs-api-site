@@ -1,4 +1,5 @@
 const path = require('path');
+const chalk = require('chalk');
 
 var fs = require('fs');
 var async = require('async');
@@ -32,14 +33,14 @@ module.exports = {
         (callback) => {
           fs.writeFile(path.join(logsFolder, 'visits.txt'), JSON.stringify(usersVisits), (err) => {
             if (err) reject(err);
-            console.log('Визиты записаны...');
+            console.log(chalk.red('Визиты записаны...'));
           });
           callback(null);
         },
         (callback) => {
           fs.writeFile(path.join(logsFolder, 'hits.txt'), JSON.stringify(usersHits), (err) => {
             if (err) reject(err);
-            console.log('Просмотры записаны...');
+            console.log(chalk.red('Просмотры записаны...'));
           });
           callback(null);
         }

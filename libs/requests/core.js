@@ -1,4 +1,5 @@
 var request = require('request');
+const chalk = require('chalk');
 
 const AuthToken = require('./../../config').API.token;
 const CounterID = require('./../../config').API.counterID;
@@ -18,7 +19,7 @@ function getVisits(requestID) {
     request(options, function(error, response, body) {
       if (body === undefined || error) reject('Error visits');
 
-      console.log('Визиты получены...');
+      console.log(chalk.blue('Визиты загружены...'));
 
       const lines = body.split('\n').splice(1);
       const visitsList = lines.map((line, index) => {
@@ -55,7 +56,7 @@ function getHits(requestID) {
       //console.log(response.statusCode);
       if (body === undefined || error) reject('Error hits');
 
-      console.log('Просмотры получены...');
+      console.log(chalk.blue('Просмотры загружены...'));
 
       const lines = body.split('\n').splice(1);
       let hitsList = lines.map((line, index) => {
@@ -87,19 +88,22 @@ function getRequestsList() {
     request(options, function(error, response, body) {
       if (body === undefined || error) reject('Error requests');
 
-      console.log('Запросы получены');
+      console.log(chalk.blue('Запросы загружены...OK'));
 
-      const reqList = JSON.parse(body).requests.map((request) => {
-        const newItem = {
-          id: request.request_id,
-          source: request.source,
-          date1: request.date1,
-          date2: request.date2
-        };
-        return newItem;
-      });
-      resolve(reqList);
-
+      try {
+        const reqList = JSON.parse(body).requests.map((request) => {
+          const newItem = {
+            id: request.request_id,
+            source: request.source,
+            date1: request.date1,
+            date2: request.date2
+          };
+          return newItem;
+        });
+        resolve(reqList);
+      } catch (err) {
+        resolve(err)
+      }
 
     });
   });
@@ -116,18 +120,25 @@ function getRequestsIDs() {
     request(options, function(error, response, body) {
       if (body === undefined || error) reject(error);
 
-      console.log('Запросы получены...');
+      console.log(chalk.blue('Запросы загружены...OK'));
 
-      const requests = JSON.parse(body).requests;
-      const visitsRequests = requests.filter((request) => {
-        return (request.source == 'visits');
-      });
-      const hitsRequests = requests.filter((request) => {
-        return (request.source == 'hits');
-      });
-      //console.log(visitsRequests, hitsRequests);
+      try {
+        
+        const requests = JSON.parse(body).requests;
+        const visitsRequests = requests.filter((request) => {
+          return (request.source == 'visits');
+        });
+        const hitsRequests = requests.filter((request) => {
+          return (request.source == 'hits');
+        });
 
-      resolve([visitsRequests.slice(-1)[0].request_id, hitsRequests.slice(-1)[0].request_id]);
+        const visitsRequestID = visitsRequests.slice(-1)[0].request_id;
+        const hitsRequestID = hitsRequests.slice(-1)[0].request_id;
+        resolve([visitsRequestID, hitsRequestID]);
+        
+      } catch (err) {
+        resolve(err);
+      }
     });
   });
 }
