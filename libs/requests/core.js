@@ -88,8 +88,6 @@ function getRequestsList() {
     request(options, function(error, response, body) {
       if (body === undefined || error) reject('Error requests');
 
-      console.log(chalk.blue('Запросы загружены...OK'));
-
       try {
         const reqList = JSON.parse(body).requests.map((request) => {
           const newItem = {
@@ -100,8 +98,12 @@ function getRequestsList() {
           };
           return newItem;
         });
+
+        console.log(chalk.blue('Информация о запросах загружена...OK'));
         resolve(reqList);
+
       } catch (err) {
+        console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
         resolve(err)
       }
 
@@ -120,10 +122,8 @@ function getRequestsIDs() {
     request(options, function(error, response, body) {
       if (body === undefined || error) reject(error);
 
-      console.log(chalk.blue('Запросы загружены...OK'));
-
       try {
-        
+
         const requests = JSON.parse(body).requests;
         const visitsRequests = requests.filter((request) => {
           return (request.source == 'visits');
@@ -134,9 +134,12 @@ function getRequestsIDs() {
 
         const visitsRequestID = visitsRequests.slice(-1)[0].request_id;
         const hitsRequestID = hitsRequests.slice(-1)[0].request_id;
+
+        console.log(chalk.blue('Запросы загружены...OK'));
         resolve([visitsRequestID, hitsRequestID]);
-        
+
       } catch (err) {
+        console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
         resolve(err);
       }
     });
