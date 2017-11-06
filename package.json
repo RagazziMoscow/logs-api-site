@@ -8,7 +8,8 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
-    "start": "node app.js"
+    "start": "node app.js",
+    "postinstall": "bower install"
   },
   "author": "zz",
   "license": "ISC",
