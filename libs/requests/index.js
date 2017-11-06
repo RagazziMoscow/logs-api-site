@@ -10,12 +10,16 @@ module.exports = {
           const visits = core.getVisits(visitsReqID)
             .then((visits) => {
               callback(null, visits);
+            }, (error) => {
+              callback(error);
             });
         },
         (callback) => {
           const hits = core.getHits(hitsReqID)
             .then((hits) => {
               callback(null, hits);
+            }, (error) => {
+              callback(error);
             });
         }
       ], (err, results) => {

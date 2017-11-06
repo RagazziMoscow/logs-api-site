@@ -17,15 +17,19 @@ module.exports = function(app) {
   });
 
   app.get('/download', async function(req, res, next) {
-    const IDs = await requests.getRequestsIDs();
-    const visitsReqID = IDs[0];
-    const hitsReqID = IDs[1];
+    try {
+      const IDs = await requests.getRequestsIDs();
+      const visitsReqID = IDs[0];
+      const hitsReqID = IDs[1];
 
-    const logsData = await requests.getData(visitsReqID, hitsReqID); // Загрузка логов
-    const usersVisits = logsData[0]; // Визиты
-    const usersHits = logsData[1]; // Просмотры
+      const logsData = await requests.getData(visitsReqID, hitsReqID); // Загрузка логов
+      const usersVisits = logsData[0]; // Визиты
+      const usersHits = logsData[1]; // Просмотр
 
-    files.writeLogs(logsFolder, usersVisits, usersHits); // Запись логов
+      files.writeLogs(logsFolder, usersVisits, usersHits); // Запись логов
+    } catch (err) {
+      res.status(500).send('FILED');
+    }
 
     res.status(200).send('OK');
   });

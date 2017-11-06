@@ -4,17 +4,20 @@ var app = new Vue({
     offset: 0,
     activeCount: 20,
     logsAreReady: false,
+    donwloadingIsRunning: false,
     logs: []
   },
   methods: {
     downloadLogs: function() {
-
+      this.donwloadingIsRunning = true;
       this.$http.get('/download').then(response => {
         this.logsAreReady = true;
+        this.donwloadingIsRunning = false;
         console.log('Логи загружены');
       }, err => {
         // error callback
         console.log(err);
+        this.donwloadingIsRunning = false;
         alert('Ошибка сервера');
       });
     },
