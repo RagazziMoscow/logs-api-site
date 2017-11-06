@@ -3,7 +3,7 @@ const logsFolder = './logs';
 const path = require('path');
 const chalk = require('chalk');
 
-var requests = require('./../libs/requests');
+var download = require('./../libs/download');
 var transforms = require('./../libs/transforms');
 var files = require('./../libs/files');
 
@@ -18,11 +18,11 @@ module.exports = function(app) {
 
   app.get('/download', async function(req, res, next) {
     try {
-      const IDs = await requests.getRequestsIDs();
+      const IDs = await download.getRequestsIDs();
       const visitsReqID = IDs[0];
       const hitsReqID = IDs[1];
 
-      const logsData = await requests.getData(visitsReqID, hitsReqID); // Загрузка логов
+      const logsData = await download.getData(visitsReqID, hitsReqID); // Загрузка логов
       const usersVisits = logsData[0]; // Визиты
       const usersHits = logsData[1]; // Просмотр
 

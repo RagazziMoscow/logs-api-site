@@ -1,4 +1,4 @@
-var requests = require('./../libs/requests');
+var download = require('./../libs/download');
 
 
 
@@ -9,7 +9,7 @@ module.exports = function(app) {
     let reqList;
 
     try {
-      const list = await requests.getRequestsList();
+      const list = await download.getRequestsList();
       reqList = list;
 
     } catch (err) {
