@@ -4,14 +4,14 @@
     <div class="col-md-1"></div>
     <div class="col-md-3">
       <h4 class="offset">
-        {{ (logsAreReady) ? ('Вывести ' + Number(offset + activeCount) + ' пользователей') : 'Загрузите логи'}}
+        {{ (logsAreReady) ? ('Вывести ' + Number(offset + activeCount) + ' пользователей') : 'Скачайте логи'}}
       </h4>
     </div>
     <div class="col-md-2">
       <button type="button" class="btn btn-warning"
         v-on:click="downloadLogs"
         v-bind:disabled="logsAreReady">
-          Загрузить логи
+          Скачать логи
       </button>
     </div>
     <div class="col-md-2">
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="background" v-show="donwloadingIsRunning">
+  <div class="background" v-show="processIsRunning">
     <div id="circularG">
       <div id="circularG_1" class="circularG"></div>
       <div id="circularG_2" class="circularG"></div>

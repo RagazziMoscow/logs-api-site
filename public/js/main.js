@@ -5,7 +5,14 @@ var app = new Vue({
     activeCount: 20,
     logsAreReady: false,
     donwloadingIsRunning: false,
+    printingIsRunning: false,
     logs: []
+  },
+  computed: {
+    processIsRunning: function() {
+      const processing = (this.donwloadingIsRunning || this.printingIsRunning);
+      return processing;
+    }
   },
   methods: {
     downloadLogs: function() {
@@ -27,14 +34,17 @@ var app = new Vue({
         offset: this.offset,
         activeCount: this.activeCount
       };
+      this.printingIsRunning = true;
 
       this.$http.post('/print', data, {
         emulateJSON: true
       }).then(response => {
         this.logs = this.logs.concat(response.body);
         this.offset += 20;
+        this.printingIsRunning = false;
       }, (err) => {
         console.log(err);
+        this.printingIsRunning = false;
         alert('Ошибка сервера');
       });
     },
