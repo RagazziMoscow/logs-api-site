@@ -31,8 +31,8 @@ module.exports = {
   },
 
   getRequestsList: async function() {
-    const reqList = await core.getRequestsList();
-    return reqList;
+    const requestsList = await core.getRequestsList();
+    return requestsList;
   },
   getRequestsIDs: async function() {
     const IDsList = await core.getRequestsIDs();

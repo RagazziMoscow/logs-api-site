@@ -6,19 +6,11 @@ module.exports = function(app) {
 
   app.get('/requests', async function(req, res) {
     const title = 'Запросы';
-    let reqList;
-
-    try {
-      const list = await download.getRequestsList();
-      reqList = list;
-
-    } catch (err) {
-      reqList = [];
-    }
+    const list = await download.getRequestsList();
 
     res.render('requests', {
       title,
-      requests: reqList
+      requests: list
     });
   });
 

@@ -86,7 +86,13 @@ function getRequestsList() {
     };
 
     request(options, function(error, response, body) {
-      if (body === undefined || error) reject('Error requests');
+      
+      const errorCondition = !(body) || error;
+      if (errorCondition) {
+        console.log(error);
+        console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
+        resolve([]);
+      };
 
       try {
         const reqList = JSON.parse(body).requests.map((request) => {
@@ -104,7 +110,7 @@ function getRequestsList() {
 
       } catch (err) {
         console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
-        resolve(err)
+        resolve([]);
       }
 
     });
@@ -120,7 +126,13 @@ function getRequestsIDs() {
     };
 
     request(options, function(error, response, body) {
-      if (body === undefined || error) reject(error);
+      
+      const errorCondition = !(body) || error;
+      if (errorCondition) {
+        console.log(error);
+        console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
+        resolve([]);
+      };
 
       try {
 
@@ -140,7 +152,7 @@ function getRequestsIDs() {
 
       } catch (err) {
         console.log(chalk.blue('При загрузке запросов произошла ошибка...'));
-        resolve(err);
+        resolve([]);
       }
     });
   });

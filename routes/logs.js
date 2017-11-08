@@ -17,8 +17,11 @@ module.exports = function(app) {
   });
 
   app.get('/download', async function(req, res, next) {
-    try {
-      const IDs = await download.getRequestsIDs();
+
+    const IDs = await download.getRequestsIDs();
+
+    if (IDs.length !== 0) {
+      
       const visitsReqID = IDs[0];
       const hitsReqID = IDs[1];
 
@@ -27,33 +30,35 @@ module.exports = function(app) {
       const usersHits = logsData[1]; // Просмотр
 
       files.writeLogs(logsFolder, usersVisits, usersHits); // Запись логов
-    } catch (err) {
+      res.status(200).send('OK');
+
+    } else {
       res.status(500).send('FILED');
     }
-
-    res.status(200).send('OK');
   });
 
   app.post('/print', async function(req, res, next) {
-    let offsetCount = 0;
-    let activeUsersCount = 20;
+
     if (req.body) {
-      offsetCount = Number(req.body.offset)
-      activeUsersCount = Number(req.body.activeCount);
-    };
+      const offsetCount = Number(req.body.offset) || 0;
+      const activeUsersCount = Number(req.body.activeCount) || 0;
 
-    const logsData = await files.readLogs(logsFolder); // чтение логов
-    console.log(chalk.green('Обработка логов начата...'));
+      const logsData = await files.readLogs(logsFolder); // чтение логов
+      console.log(chalk.green('Обработка логов начата...'));
 
-    const usersVisits = logsData[0]; // визиты
-    const usersHits = logsData[1]; // просмотры
+      const usersVisits = logsData[0]; // визиты
+      const usersHits = logsData[1]; // просмотры
 
-    const usersIDs = transforms.getUsersIDsList(usersVisits); // ID всех пользователей
-    const activeUsersIDs = transforms.getActiveUsers(usersIDs, activeUsersCount, offsetCount); // ID активных пользователей
-    const report = await transforms.getActiveUsersStatisticks(activeUsersIDs, usersVisits, usersHits); // отчёт
-    console.log(chalk.green('Логи получены...OK'));
+      const usersIDs = transforms.getUsersIDsList(usersVisits); // ID всех пользователей
+      const activeUsersIDs = transforms.getActiveUsers(usersIDs, activeUsersCount, offsetCount); // ID активных пользователей
+      const report = await transforms.getActiveUsersStatisticks(activeUsersIDs, usersVisits, usersHits); // отчёт
+      console.log(chalk.green('Логи получены...OK'));
 
-    res.json(report);
+      res.json(report);
+    } else {
+      res.send(500).send('FILED');
+    }
+
   });
 
   app.get('/removeLogs', async function(req, res) {
