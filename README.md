@@ -1,29 +1,26 @@
-# README #
+This application downloads and shows information about users visiting your site.
+You can see following data:
 
-This README would normally document whatever steps are necessary to get your application up and running.
+* Date of the each visit
+* Duration of the each visit
+* Pages user had seen(titles, urls)
+* Users ID
 
-### What is this repository for? ###
+### Install
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+`git clone https://github.com/RagazziMoscow/logs-api-site.git .`
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Config
 
-### Contribution guidelines ###
+You need do create `config` folder into the root directory and put here `index.js` file.
+Content of `index.js`:
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+```javascript
+module.exports = {
+  API: {
+    token: 'stringWithAuthToken',
+    counterID: YourCounterID
+  }
+}
+```
